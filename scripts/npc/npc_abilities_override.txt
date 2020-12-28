@@ -1,0 +1,631 @@
+
+// Dota Abilities Override File
+"DOTAAbilities"
+{
+	"Version"		"1"
+
+	//=================================================================================================================
+	// Special Item Drops
+	//=================================================================================================================
+	"item_urn_of_shadows"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_invis_sword"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_ring_of_aquila"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_phase_boots"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_power_treads"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_blink"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_force_staff"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_cyclone"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_ghost"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_mask_of_madness"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_medallion_of_courage"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_soul_ring"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_blade_mail"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_dagon"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_shivas_guard"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_vanguard"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_sphere"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_vladmir"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_yasha"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_diffusal_blade"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_helm_of_the_dominator"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_mekansm"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_hood_of_defiance"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_basher"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_desolator"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_ultimate_scepter"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_dagon_5"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_greater_crit"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_manta"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_heart"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_mjollnir"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_bfury"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_pipe"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_heavens_halberd"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_crimson_guard"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_black_king_bar"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_bloodstone"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_ethereal_blade"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_abyssal_blade"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_butterfly"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_monkey_king_bar"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_glimmer_cape"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_lotus_orb"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_guardian_greaves"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_moon_shard"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_solar_crest"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_silver_edge"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+	"item_octarine_core"
+	{
+		"ItemShareability"			"ITEM_FULLY_SHAREABLE"
+	}
+
+	//=================================================================================================================
+	// Nerf Dagon
+	//=================================================================================================================
+	"item_recipe_dagon"
+	{
+		"ItemPurchasable"			"1"
+		"ItemCost"					"1500"
+	}
+
+	//=================================================================================================================
+	// Remove Hand of Midas
+	//=================================================================================================================
+	"item_hand_of_midas"
+	{
+		"ItemPurchasable"			"0"
+		"ItemCost"					"2500"
+	}
+
+	//=================================================================================================================
+	// Sentry Ward
+	//=================================================================================================================
+	"item_ward_sentry"
+	{
+		"ItemCost"						"100"
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lifetime"				"360"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_range"			"0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"true_sight_range"		"850"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health"				"200"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration_minutes_tooltip"				"6"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Dust
+	//=================================================================================================================
+	"item_dust"
+	{
+		"AbilityCooldown"				"15.0"
+		"ItemCost"						"40"
+	}
+	
+	//=================================================================================================================
+	// Silencer: Glaives of Wisdom
+	//=================================================================================================================
+	"silencer_glaives_of_wisdom"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"intellect_damage_pct"	"12 25 37 50"
+				"LinkedSpecialBonus"	"special_bonus_unique_silencer_3"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"int_steal"		"1 1 2 3"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"int_steal_duration"		"10 20 30 40"
+			}
+		}
+		
+	}
+	//=================================================================================================================
+	// Ability: Necrolyte's Reaper's Scythe
+	//=================================================================================================================
+	"necrolyte_reapers_scythe"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_per_health"			"0.7 0.8 0.9"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"stun_duration"				"1.5 1.5 1.5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"respawn_constant"		"5 5 5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Riki: Permanent Invisibility
+	//=================================================================================================================
+	"riki_permanent_invisibility"
+	{
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"fade_delay"					"4 3.25 2.5"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_speed"			"20 40 60"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Bounty Hunter: Wind Walk
+	//=================================================================================================================
+	"bounty_hunter_wind_walk"
+	{
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"14.0 16.0 18.0 20.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"fade_time"					"1.5 1.2 0.8 0.5"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"slow"				"14 20 26 32"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"slow_duration"				"4"
+			}
+		}
+		
+	}
+
+	//=================================================================================================================
+	// Ability: Pudge Flesh Heap
+	//=================================================================================================================
+	"pudge_flesh_heap"
+	{
+		"AbilitySpecial"
+		{
+			"02"
+			{
+				"var_type"							"FIELD_FLOAT"
+				"flesh_heap_strength_buff_amount"	"0.5 1.0 1.5 2.0"
+				"LinkedSpecialBonus"			"special_bonus_unique_pudge_1"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Ability: Nevermore Necromastery
+	//=================================================================================================================
+	"nevermore_necromastery"
+	{
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"03"
+			{
+				"var_type"						"FIELD_FLOAT"
+				"necromastery_soul_release"		"0.8"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Slark: Essence Shift
+	//=================================================================================================================
+	"slark_essence_shift"
+	{
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"agi_gain"				"3"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stat_loss"				"1"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"10 20 30 40"
+				"LinkedSpecialBonus"	"special_bonus_unique_slark_4"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+	}
+	
+	//=================================================================================================================
+	// Ability: Special Bonus
+	//=================================================================================================================
+	"special_bonus_unique_slark_4"
+	{
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"value"				"20"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Visage: Summon Familiars
+	//=================================================================================================================
+	"visage_summon_familiars"
+	{
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"40"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"familiar_hp"				"1000 1500 2000"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"familiar_armor"			"4 6 8"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"familiar_speed"			"430"
+				"LinkedSpecialBonus"		"special_bonus_unique_visage_2"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"familiar_attack_damage"	"40 60 80"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"tooltip_scepter_total_familiars"	"3"
+				"LinkedSpecialBonus"		"special_bonus_unique_visage_6"
+				"RequiresScepter"	"1"
+			}
+		}
+
+	}
+
+	//=================================================================================================================
+	// Ability: Sand King Sand Storm
+	//=================================================================================================================
+	"sandking_sand_storm"
+	{
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"fade_delay"			"3.0 2.5 2 1.5"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Infused Raindrop
+	//=================================================================================================================
+	"item_infused_raindrop"
+	{
+		"ItemInitialStockTime"			"10.0"
+	}
+
+	//=================================================================================================================
+	// Lone Druid: Summon Spirit Bear
+	//=================================================================================================================
+	"lone_druid_spirit_bear"
+	{
+		// Time
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"40.0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bear_hp"					"1500 2000 2500 3000"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"bear_bat"					"1.75 1.65 1.55 1.45"
+				"LinkedSpecialBonus"	"special_bonus_unique_lone_druid_10"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bear_armor"				"3 4 5 6"
+				"LinkedSpecialBonus"	"special_bonus_unique_lone_druid_2"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"backlash_damage"			"10.0"
+			}
+			"06"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cooldown_scepter"			"30.0"
+				"RequiresScepter"			"1"
+			}
+		}
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_1"
+	}
+
+	//=================================================================================================================
+	// Tome of Knowledge
+	//=================================================================================================================
+	"item_tome_of_knowledge"
+	{
+		"ItemStockTime"					"180.0"
+		"ItemInitialStockTime"			"60.0"
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"xp_bonus"				"250"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"xp_per_use"			"1250"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Treant Protector: Nature's Guise
+	//=================================================================================================================
+	"treant_natures_guise"
+	{
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"radius"					"500"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"grace_time"				"1.0"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"cooldown_time"				"1.5"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"regen_amp"					"50"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_bonus"			"25"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Observer Wards
+	//=================================================================================================================
+	"item_ward_observer"
+	{
+		"ItemPurchasable"				"0"
+	}
+
+}

@@ -1,0 +1,15 @@
+// Dota Heroes File
+// NOTE: This is not for creating new heroes, this is for taking a currently existing hero as a template and overriding
+// the specified key-value combinations.  Use override_hero <hero_to_override> for this.
+"DOTAHeroes"
+{
+	"npc_dota_hero_doom_bringer"
+	{
+		"Ability1"	"doom_bringer_devour_custom"
+		"Ability15"	"special_bonus_gold_income_30"
+	}
+	//"npc_dota_hero_enigma"
+	//{
+	//	"Ability2"	"enigma_demonic_conversion_custom"
+	//}
+}

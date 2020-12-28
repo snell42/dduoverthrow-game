@@ -1,0 +1,8 @@
+forest_solo_pit
+{
+	material materials/overviews/forest_solo_pit.vmat
+	pos_x -5632
+	pos_y 5632
+	scale 11.000
+}
+

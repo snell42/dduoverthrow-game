@@ -1,0 +1,19 @@
+"AddonInfo"
+{
+	maps		"desert_duo forest_solo forest_pit"
+	"HeroGuidesSupported"		"1"
+	"PenaltiesEnabled"		"0"
+	"CheckAFKPlayers"		"0"
+	"desert_duo"
+	{
+		"MaxPlayers"		"10"
+	}
+	"forest_solo"
+	{
+		"MaxPlayers"		"10"
+	}
+	"forest_pit"
+	{
+		"MaxPlayers"		"10"
+	}
+}
