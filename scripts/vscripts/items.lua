@@ -73,156 +73,151 @@ function COverthrowGameMode:SpecialItemAdd( event )
 	local owner = EntIndexToHScript( event.HeroEntityIndex )
 	local hero = owner:GetClassname()
 	local ownerTeam = owner:GetTeamNumber()
+	print ( ownerTeam )
 	local sortedTeams = {}
 	for _, team in pairs( self.m_GatheredShuffledTeams ) do
 		table.insert( sortedTeams, { teamID = team, teamScore = GetTeamHeroKills( team ) } )
 	end
+
+	teamItemsCollected[ownerTeam] = teamItemsCollected[ownerTeam] or {}
 
 	-- reverse-sort by score
 	table.sort( sortedTeams, function(a,b) return ( a.teamScore > b.teamScore ) end )
 	local n = TableCount( sortedTeams )
 	local leader = sortedTeams[1].teamID
 	local lastPlace = sortedTeams[n].teamID
-	
-	print ( n )
 
-	neutralItems = {
-		[1] = {
-			"item_keen_optic",
-			"item_poor_mans_shield",
-			"item_ironwood_tree",
-			"item_royal_jelly",
-			"item_mango_tree",
-			"item_broom_handle"
-		},
-
-		[2] = {
-			"item_ring_of_aquila",
-			"item_pupils_gift",
-			"item_philosophers_stone",
-			"item_nether_shawl",
-			"item_essence_ring",
-			"item_vambrace",
-			"item_clumsy_net"
-		},
-
-		[3] = {
-			"item_repair_kit",
-			"item_craggy_coat",
-			"item_greater_faerie_fire",
-			"item_quickening_charm",
-			"item_spider_legs",
-			"item_enchanted_quiver",
-			"item_paladin_sword",
-			"item_orb_of_destruction",
-			"item_titan_sliver",
-			"item_spy_gadget",
-			"item_mind_breaker"
-		},
-
-		[4] = {
-			"item_witless_shako",
-			"item_timeless_relic",
-			"item_spell_prism",
-			"item_princes_knife",
-			"item_flicker",
-			"item_ninja_gear",
-			"item_illusionsts_cape",
-			"item_havoc_hammer",
-			"item_panic_button",
-			"item_the_leveller",
-			"item_minotaur_horn",
-			"item_horizon"
-		},
-
-		[5] = {
-			"item_force_boots",
-			"item_desolator_2",
-			"item_seer_stone",
-			"item_apex",
-			"item_ballista",
-			"item_woodland_striders",
-			"item_demonicon",
-			"item_pirate_hat",
-			"item_ex_machina"
-		},
-
-		[6] = {
-			"item_trident",
-			"item_mirror_shield",
-			"item_fallen_sky"
-		}
+	local neutralItems = {}
+	neutralItems[1] = {
+		"item_satchel",
+		"item_satchel",
+		"item_satchel",
+		"item_ancient_perseverance",
+		"item_overflowing_elixir",
+		"item_imp_claw",
+	}
+	neutralItems[2] = {
+		"item_quickening_charm",
+		"item_titan_sliver",
+		"item_mind_breaker",
+		"item_flicker",
+		"item_helm_of_the_undying",
+	}
+	neutralItems[3] = {
+		"item_spell_prism",
+		"item_minotaur_horn",
+		"item_princes_knife",
+		"item_fusion_rune",
+		"item_seer_stone",
+	}
+	neutralItems[4] = {
+		"item_apex",
+		"item_demonicon",
+		"item_pirate_hat",
+		"item_ballista",
+	}
+	neutralItems[5] = {
+		"item_desolator_2",
+		"item_mirror_shield",
+		"item_trident",
+		"item_giants_ring"
 	}
 
 	-- Code :)
 	local cGameTime = GameRules:GetDOTATime(false, true)
 	local tierToGive = 1
 	
-	if cGameTime > 60 * 8 then
-		tierToGive = 5
-	elseif cGameTime > 60 * 5 then
-		tierToGive = 4
-	elseif cGameTime > 60 * 2.5 then
-		tierToGive = 3
-	else
-		tierToGive = 2
-	end
+	if cGameTime > 60 * 15 then tierToGive = 5
+	elseif cGameTime > 60 * 12 then tierToGive = 4
+	elseif cGameTime > 60 * 7 then tierToGive = 3
+	elseif cGameTime > 60 * 4 then tierToGive = 2
+	else tierToGive = 1 end
 
-	if ownerTeam == leader and ( self.leadingTeamScore - self.runnerupTeamScore > 1 ) then
-		tierToGive = tierToGive - 1
-	elseif ownerTeam == lastPlace then
-		tierToGive = tierToGive + 1
-	end
-
-	local cParse = 0
+	-- non leaders get a bonus - every 7 points behind the leader you get a point upgrade (rounded down)
+	tierToGive = tierToGive + math.floor ( (sortedTeams[1].teamScore - sortedTeams[n].teamScore) / 7 )
+	
+	-- handle errors
+	if tierToGive > 5 then tierToGive = 5 end
+	if tierToGive < 1 then tierToGive = 1 end
+	
+	local seed = tonumber ( string.gsub ( GetSystemDate (), "/", "" ) .. string.gsub ( GetSystemTime (), ":", "" ) )
+	math.randomseed ( seed )
+	
 	local itemToGive = ""
-	while true do
+	local originalTierToGive = tierToGive
+	
+	local function pickItemToGive ( tier )
+	
+		if tier == 0 then
+			return 375 * math.pow ( 2, originalTierToGive-1 )
+		end
+		
+		-- Gets a list of items which the player can receive
+		local itemsToGive = {}
+		local tableEntries = 0
+		for k, v in pairs ( neutralItems[tier] ) do
+			
+			if teamItemsCollected[ownerTeam][v] then
+				-- this team has already collected this item
+			else
+				table.insert ( itemsToGive, v )
+				tableEntries = tableEntries + 1
+			end
+			
+		end
+		
+		if tableEntries == 0 then		
+			
+			local rng5 = math.random ( 8 )
+			if rng5 == 1 then
+				print ( "giving money" )
+				return 375 * math.pow ( 2, tier-1 )
+			else
+				return pickItemToGive ( tier-1 )
+			end
 
-		local randNumber = math.random ( 1, #neutralItems[tierToGive])
-		potentialItem = neutralItems[tierToGive][randNumber]
-
-		if owner:HasItemInInventory ( potentialItem ) then
-			-- print ( "You have " .. neutralItems[tierToGive][randNumber] )
 		else
-			itemToGive = potentialItem
-			break
+			local itemIndex = math.random ( #itemsToGive )
+			teamItemsCollected[ownerTeam][itemsToGive[itemIndex]] = true
+			return itemsToGive[itemIndex]
 		end
-
-		cParse = cParse + 1
-		if cParse > 25 then
-			itemToGive = "item_branches"
-			break
-		end
-
+		
 	end
+	
+	itemToGive = pickItemToGive ( tierToGive )
 
-	print ( potentialItem )
-
-	if tierToGive == 6 then
-
-		if math.random ( 4 ) == 1 then
-			potentialItem = "item_greater_mango"
+	if type ( itemToGive ) == "string" then
+		owner:AddItemByName( itemToGive )
+		EmitGlobalSound("powerup_04")
+		local overthrow_item_drop =
+		{
+			hero_id = hero,
+			dropped_item = itemToGive
+		}
+		CustomGameEventManager:Send_ServerToAllClients( "overthrow_item_drop", overthrow_item_drop )
+		
+		if itemToGive == "item_branches" then
+			owner:ModifyGold ( 200 * ( cGameTime / 60 ), true, 0 )
 		end
+	else
+		owner:ModifyGold ( itemToGive, true, 0 )
+		EmitGlobalSound("powerup_04")
 
+		local overthrow_item_drop =
+		{
+			hero_id = hero,
+			dropped_item = "item_bag_of_gold2"
+		}
+		CustomGameEventManager:Send_ServerToAllClients( "overthrow_item_drop", overthrow_item_drop )
 	end
-
-	spawnedItem = potentialItem
-	-- add the item to the inventory and broadcast
-	owner:AddItemByName( spawnedItem )
-	EmitGlobalSound("powerup_04")
-	local overthrow_item_drop =
-	{
-		hero_id = hero,
-		dropped_item = spawnedItem
-	}
-	CustomGameEventManager:Send_ServerToAllClients( "overthrow_item_drop", overthrow_item_drop )
+	
 end
 
 function COverthrowGameMode:ThinkSpecialItemDrop()
 	-- Stop spawning items after 15
-	if self.nNextSpawnItemNumber >= 15 then
-		return
-	end
+	--if self.nNextSpawnItemNumber >= 15 then
+	--	return
+	--end
 	-- Don't spawn if the game is about to end
 	if nCOUNTDOWNTIMER < 20 then
 		return
@@ -298,16 +293,18 @@ function COverthrowGameMode:SpawnItem()
 	EmitGlobalSound( "powerup_05" )
 
 	-- spawn the item
-	local startLocation = Vector( 0, 0, 700 )
+	--local startLocation = Vector( 0, 0, 700 )
+	local startLocation = Entities:FindByName( nil, "@overboss" )
+	if startLocation then startLocation=startLocation:GetOrigin () else startLocation = Vector( 0, 0, 700 ) end
 	local treasureCourier = CreateUnitByName( "npc_dota_treasure_courier" , startLocation, true, nil, nil, DOTA_TEAM_NEUTRALS )
 	local treasureAbility = treasureCourier:FindAbilityByName( "dota_ability_treasure_courier" )
 	treasureAbility:SetLevel( 1 )
     --print ("Spawning Treasure")
     targetSpawnLocation = self.itemSpawnLocation
     treasureCourier:SetInitialGoalEntity(targetSpawnLocation)
-    local particleTreasure = ParticleManager:CreateParticle( "particles/items_fx/black_king_bar_avatar.vpcf", PATTACH_ABSORIGIN, treasureCourier )
-	ParticleManager:SetParticleControlEnt( particleTreasure, PATTACH_ABSORIGIN, treasureCourier, PATTACH_ABSORIGIN, "attach_origin", treasureCourier:GetAbsOrigin(), true )
-	treasureCourier:Attribute_SetIntValue( "particleID", particleTreasure )
+    --local particleTreasure = ParticleManager:CreateParticle( "particles/items_fx/black_king_bar_avatar.vpcf", PATTACH_ABSORIGIN, treasureCourier )
+	--ParticleManager:SetParticleControlEnt( particleTreasure, PATTACH_ABSORIGIN, treasureCourier, PATTACH_ABSORIGIN, "attach_origin", treasureCourier:GetAbsOrigin(), true )
+	--treasureCourier:Attribute_SetIntValue( "particleID", particleTreasure )
 end
 
 function COverthrowGameMode:ForceSpawnItem()

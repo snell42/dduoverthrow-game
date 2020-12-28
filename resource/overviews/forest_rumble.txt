@@ -1,0 +1,8 @@
+forest_rumble
+{
+	material materials/overviews/forest_rumble.vmat
+	pos_x -17032
+	pos_y -210
+	scale 16.000
+}
+

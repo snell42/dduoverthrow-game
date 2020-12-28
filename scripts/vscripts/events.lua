@@ -13,7 +13,7 @@ function COverthrowGameMode:OnGameRulesStateChange()
 
 	if nNewState == DOTA_GAMERULES_STATE_PRE_GAME then
 		local numberOfPlayers = PlayerResource:GetPlayerCount()
-		nCOUNTDOWNTIMER = 2701
+		nCOUNTDOWNTIMER = 60 * 25 + 6
 		if GetMapName() == "forest_solo" or GetMapName() == "forest_pit" then
 			self.TEAM_KILLS_TO_WIN = 25
 		elseif GetMapName() == "desert_duo" then
@@ -45,6 +45,8 @@ end
 --------------------------------------------------------------------------------
 function COverthrowGameMode:OnNPCSpawned( event )
 	local spawnedUnit = EntIndexToHScript( event.entindex )
+	local timerToFreeze = 8
+
 	if spawnedUnit:IsRealHero() then
 		-- Destroys the last hit effects
 		local deathEffects = spawnedUnit:Attribute_GetIntValue( "effectsID", -1 )
@@ -63,32 +65,62 @@ function COverthrowGameMode:OnNPCSpawned( event )
 		end
 	end
 
+	if spawnedUnit:IsRealHero () and GetMapName() == "forest_rumble" then
+		local bonusMS = 5
+		
+		if IsInToolsMode () then
+			spawnedUnit:AddNewModifier ( spawnedUnit, nil, "modifier_start_hasted_lua", {} )
+		else
+			if not spawnedUnit.firstTimeSpawned then
+				spawnedUnit:AddNewModifier ( spawnedUnit, nil, "modifier_start_hasted_lua", {duration=timerToFreeze+bonusMS} )
+			else
+				spawnedUnit:AddNewModifier ( spawnedUnit, nil, "modifier_start_hasted_lua", {duration=bonusMS} )
+			end
+		end
+	end
+
 	local unitTeam = spawnedUnit:GetTeam()
 	if not spawnedUnit.firstTimeSpawned then
 		spawnedUnit.firstTimeSpawned = true
 		if spawnedUnit:IsRealHero() then
 			spawnedUnit:AddItemByName("item_boots")
-			-- spawnedUnit:AddItemByName("item_courier")
 			
-			--[[ COURIER SHIT
-			Timers:CreateTimer ( 0.1, function ()
-				local courier_spawn = spawnedUnit:GetAbsOrigin () + RandomVector(RandomFloat(100, 100))
-				local cr = CreateUnitByName("npc_dota_courier", courier_spawn, true, nil, nil, spawnedUnit:GetTeamNumber ())
-				
-				Timers:CreateTimer ( 0.1, function ()
-					cr:SetControllableByPlayer ( spawnedUnit, false )
-				end )
-				
-			end )
-			]]--
-			
-			-- local courier_spawn = spawnedUnit:GetAbsOrigin () + RandomVector(RandomFloat(100, 100))
-			-- local cr = CreateUnitByName("npc_dota_courier", courier_spawn, true, nil, nil, spawnedUnit:GetTeamNumber ())
-			-- cr:SetControllableByPlayer ( spawnedUnit:GetMainControllingPlayer(), true )
-			 -- Timers:CreateTimer(0.1, function()
-				-- cr:SetControllableByPlayer(spawnedUnit, true)
-			-- end)
+			-- prevent moving for a small period of time so everyone can load in and buy items
+			spawnedUnit:SetMoveCapability(0)			
+			spawnedUnit:SetAbilityPoints(0)
 
+			if IsInToolsMode() then timerToFreeze = 1 end
+			Timers:CreateTimer({
+				endTime = timerToFreeze,
+				callback = function()
+					spawnedUnit:SetMoveCapability(1)
+					spawnedUnit:SetAbilityPoints(1)
+				end
+			})
+			
+			local freeAghs = {
+			
+			}
+			
+			local freeShard = {
+				"npc_dota_hero_skeleton_king",
+				"npc_dota_hero_clinkz",
+				"npc_dota_hero_mirana"
+			}
+			
+			local freeBoth = {
+				"npc_dota_hero_tusk",
+				"npc_dota_hero_treant"
+			}
+			
+			local opShitMode = false
+			
+			if opShitMode then
+				for k, v in pairs ( freeAghs ) do if spawnedUnit:GetUnitName () == v then spawnedUnit:AddItemByName("item_ultimate_scepter_2") end end
+				for k, v in pairs ( freeShard ) do if spawnedUnit:GetUnitName () == v then spawnedUnit:AddItemByName("item_aghanims_shard") end end
+				for k, v in pairs ( freeBoth ) do if spawnedUnit:GetUnitName () == v then spawnedUnit:AddItemByName("item_ultimate_scepter_2") spawnedUnit:AddItemByName("item_aghanims_shard") end end
+			end
+			
 			local playerID = spawnedUnit:GetPlayerOwner():GetPlayerID()
 			local playerSteamID64 = tostring(PlayerResource:GetSteamID(playerID))
 
@@ -97,19 +129,14 @@ function COverthrowGameMode:OnNPCSpawned( event )
 			JohnsAccounts["76561198299986179"] = true -- smurf?
 
 			if JohnsAccounts[playerSteamID64] then
-				spawnedUnit:ModifyGold(100,true,0)
+				spawnedUnit:ModifyGold(99,true,0)
 			end
 
 			if IsInToolsMode() then
-				spawnedUnit:ModifyGold(50000,true,0)
+				spawnedUnit:ModifyGold(50000-600,true,0)
+				spawnedUnit:AddItemByName("item_blink")
 			end
 
-		end
-	end
-
-	if GetMapName() == "ddu_testing" then
-		if spawnedUnit:IsRealHero() then
-			spawnedUnit:ModifyGold(99999,true,0)
 		end
 	end
 
@@ -273,4 +300,42 @@ function COverthrowGameMode:OnNpcGoalReached( event )
 	if npc:GetUnitName() == "npc_dota_treasure_courier" then
 		COverthrowGameMode:TreasureDrop( npc )
 	end
+end
+
+function dumpTable(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. dumpTable(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
+
+--------------------------------------------------------------------------------
+-- Event: OnItemPickedUp
+--------------------------------------------------------------------------------
+function COverthrowGameMode:OnItemPickedUp( event )
+	
+	local unitEntity = nil
+	if event.UnitEntitIndex then
+		unitEntity = EntIndexToHScript(event.UnitEntitIndex)
+	elseif event.HeroEntityIndex then
+		unitEntity = EntIndexToHScript(event.HeroEntityIndex)
+	end
+
+	local itemEntity = EntIndexToHScript(event.ItemEntityIndex)
+	local player = PlayerResource:GetPlayer(event.PlayerID)
+	
+	local itemname = event.itemname
+	local ownerTeam = unitEntity:GetTeamNumber()
+	
+	teamItemsCollected[ownerTeam] = teamItemsCollected[ownerTeam] or {}
+	teamItemsCollected[ownerTeam][itemname] = true
+
+	print ( itemname )
+	
 end

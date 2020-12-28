@@ -1,6 +1,6 @@
 "AddonInfo"
 {
-	maps		"desert_duo forest_solo forest_pit"
+	maps		"desert_duo forest_solo forest_pit forest_rumble"
 	"HeroGuidesSupported"		"1"
 	"PenaltiesEnabled"		"0"
 	"CheckAFKPlayers"		"0"
@@ -15,5 +15,9 @@
 	"forest_pit"
 	{
 		"MaxPlayers"		"10"
+	}
+	"forest_rumble"
+	{
+		"MaxPlayers"		"20"
 	}
 }

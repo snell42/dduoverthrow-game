@@ -4,6 +4,7 @@ Overthrow Game Mode
 
 _G.nNEUTRAL_TEAM = 4
 _G.nCOUNTDOWNTIMER = 901
+_G.teamItemsCollected = {}
 
 
 ---------------------------------------------------------------------------
@@ -86,11 +87,10 @@ end
 function COverthrowGameMode:InitGameMode()
 	print( "Overthrow is loaded." )
 
-	print( "Check if in developer mode" )
 	local prewaittime = 10
 	if IsInToolsMode() then
 
-		prewaittime = 1
+		prewaittime = 2
 
 	end
 --	CustomNetTables:SetTableValue( "test", "value 1", {} );
@@ -98,15 +98,15 @@ function COverthrowGameMode:InitGameMode()
 
 	self.m_TeamColors = {}
 	self.m_TeamColors[DOTA_TEAM_GOODGUYS] = { 61, 210, 150 }	--		Teal
-	self.m_TeamColors[DOTA_TEAM_BADGUYS]  = { 243, 201, 9 }		--		Yellow
+	self.m_TeamColors[DOTA_TEAM_BADGUYS]  = { 255, 215, 0 }		--		Gold
 	self.m_TeamColors[DOTA_TEAM_CUSTOM_1] = { 197, 77, 168 }	--      Pink
-	self.m_TeamColors[DOTA_TEAM_CUSTOM_2] = { 255, 108, 0 }		--		Orange
-	self.m_TeamColors[DOTA_TEAM_CUSTOM_3] = { 52, 85, 255 }		--		Blue
-	self.m_TeamColors[DOTA_TEAM_CUSTOM_4] = { 101, 212, 19 }	--		Green
-	self.m_TeamColors[DOTA_TEAM_CUSTOM_5] = { 129, 83, 54 }		--		Brown
-	self.m_TeamColors[DOTA_TEAM_CUSTOM_6] = { 27, 192, 216 }	--		Cyan
-	self.m_TeamColors[DOTA_TEAM_CUSTOM_7] = { 199, 228, 13 }	--		Olive
-	self.m_TeamColors[DOTA_TEAM_CUSTOM_8] = { 140, 42, 244 }	--		Purple
+	self.m_TeamColors[DOTA_TEAM_CUSTOM_2] = { 142, 229, 63 }	--		kiwi
+	self.m_TeamColors[DOTA_TEAM_CUSTOM_3] = { 226, 43, 34 }		--		flame
+	self.m_TeamColors[DOTA_TEAM_CUSTOM_4] = { 54, 129, 54 }		--		kermit
+	self.m_TeamColors[DOTA_TEAM_CUSTOM_5] = { 255, 0, 255 }		--		magenta
+	self.m_TeamColors[DOTA_TEAM_CUSTOM_6] = { 245, 245, 245 }	--		beige
+	self.m_TeamColors[DOTA_TEAM_CUSTOM_7] = { 193, 154, 107 }	--		desert
+	self.m_TeamColors[DOTA_TEAM_CUSTOM_8] = { 52, 85, 255 }		--		blue
 
 	for team = 0, (DOTA_TEAM_COUNT-1) do
 		color = self.m_TeamColors[ team ]
@@ -130,7 +130,7 @@ function COverthrowGameMode:InitGameMode()
 	self.m_GatheredShuffledTeams = {}
 	self.numSpawnCamps = 5
 	self.specialItem = ""
-	self.spawnTime = 120
+	self.spawnTime = 120 -- how frequently items will drop
 	self.nNextSpawnItemNumber = 1
 	self.hasWarnedSpawn = false
 	self.allSpawned = false
@@ -203,6 +203,8 @@ function COverthrowGameMode:InitGameMode()
 	GameRules:GetGameModeEntity():SetFountainConstantManaRegen( 0 )
 	GameRules:GetGameModeEntity():SetBountyRunePickupFilter( Dynamic_Wrap( COverthrowGameMode, "BountyRunePickupFilter" ), self )
 	GameRules:GetGameModeEntity():SetExecuteOrderFilter( Dynamic_Wrap( COverthrowGameMode, "ExecuteOrderFilter" ), self )
+	GameRules:GetGameModeEntity():SetModifyExperienceFilter ( Dynamic_Wrap ( COverthrowGameMode, "FilterModifyExperience" ), self )
+	GameRules:GetGameModeEntity():SetFreeCourierModeEnabled( true )
 
 	-- Custom shit
 	GameRules:SetCustomGameSetupAutoLaunchDelay( prewaittime )
@@ -214,6 +216,7 @@ function COverthrowGameMode:InitGameMode()
 	ListenToGameEvent( "entity_killed", Dynamic_Wrap( COverthrowGameMode, 'OnEntityKilled' ), self )
 	ListenToGameEvent( "dota_item_picked_up", Dynamic_Wrap( COverthrowGameMode, "OnItemPickUp"), self )
 	ListenToGameEvent( "dota_npc_goal_reached", Dynamic_Wrap( COverthrowGameMode, "OnNpcGoalReached" ), self )
+	ListenToGameEvent( "dota_item_picked_up", Dynamic_Wrap( COverthrowGameMode, "OnItemPickedUp" ), self )
 
 	--https://developer.valvesoftware.com/wiki/ConVar
 
@@ -236,6 +239,9 @@ function COverthrowGameMode:InitGameMode()
 			WaypointName = "camp"..i.."_path_wp1"
 		}
 	end
+
+	-- modifiers
+	LinkLuaModifier( "modifier_start_hasted_lua", "modifier_start_hasted.lua", LUA_MODIFIER_MOTION_NONE )
 
 end
 
@@ -448,6 +454,13 @@ function COverthrowGameMode:GatherAndRegisterValidTeams()
 
 	local maxPlayersPerValidTeam = math.floor( 10 / numTeams )
 
+	--if GetMapName () == "forest_rumble" then maxPlayersPerValidTeam = 2 end
+	if maxPlayersPerValidTeam == 1 then
+		if numTeams <= 11 then
+			maxPlayersPerValidTeam = 2
+		end
+	end
+
 	self.m_GatheredShuffledTeams = ShuffledList( foundTeamsList )
 
 	print( "Final shuffled team list:" )
@@ -536,4 +549,17 @@ function COverthrowGameMode:ExecuteOrderFilter( filterTable )
 		end
 	end
 	return true
+end
+
+-- nerf meepo
+function COverthrowGameMode:FilterModifyExperience ( filterTable )
+
+	-- hero_entindex_const, reason_const, experience, player_id_const
+	local meepoQ = EntIndexToHScript ( filterTable["hero_entindex_const"] )
+	if meepoQ:IsClone () then
+		filterTable["experience"] = 0
+	end
+
+	return true
+
 end
