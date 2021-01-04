@@ -133,13 +133,14 @@ function COverthrowGameMode:SpecialItemAdd( event )
 	elseif cGameTime > 60 * 4 then tierToGive = 2
 	else tierToGive = 1 end
 
-	-- non leaders get a bonus - every 7 points behind the leader you get a point upgrade (rounded down)
-	tierToGive = tierToGive + math.floor ( (sortedTeams[1].teamScore - sortedTeams[n].teamScore) / 7 )
+	-- non leaders get a bonus - every 6 points behind the leader you get a point upgrade (rounded down)
+	tierToGive = tierToGive + math.floor ( (sortedTeams[1].teamScore - sortedTeams[n].teamScore) / 6 )
 	
 	-- handle errors
 	if tierToGive > 5 then tierToGive = 5 end
 	if tierToGive < 1 then tierToGive = 1 end
 	
+	-- seeds very well :)
 	local seed = tonumber ( string.gsub ( GetSystemDate (), "/", "" ) .. string.gsub ( GetSystemTime (), ":", "" ) )
 	math.randomseed ( seed )
 	

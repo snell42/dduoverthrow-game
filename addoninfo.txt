@@ -6,15 +6,15 @@
 	"CheckAFKPlayers"		"0"
 	"desert_duo"
 	{
-		"MaxPlayers"		"10"
+		"MaxPlayers"		"15"
 	}
 	"forest_solo"
 	{
-		"MaxPlayers"		"10"
+		"MaxPlayers"		"20"
 	}
 	"forest_pit"
 	{
-		"MaxPlayers"		"10"
+		"MaxPlayers"		"20"
 	}
 	"forest_rumble"
 	{

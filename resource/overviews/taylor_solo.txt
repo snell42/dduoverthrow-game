@@ -1,0 +1,8 @@
+taylor_solo
+{
+	material materials/overviews/taylor_solo.vmat
+	pos_x -2048
+	pos_y 2048
+	scale 4.000
+}
+

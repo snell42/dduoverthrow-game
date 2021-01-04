@@ -461,6 +461,12 @@ function COverthrowGameMode:GatherAndRegisterValidTeams()
 		end
 	end
 
+	if GetMapName () == "ddu_testing" then maxPlayersPerValidTeam = 1 end
+	if GetMapName () == "forest_solo" then maxPlayersPerValidTeam = 2 end
+	if GetMapName () == "desert_duo" then maxPlayersPerValidTeam = 3 end
+	if GetMapName () == "desert_pit" then maxPlayersPerValidTeam = 2 end
+	if GetMapName () == "forest_rumble" then maxPlayersPerValidTeam = 2 end
+
 	self.m_GatheredShuffledTeams = ShuffledList( foundTeamsList )
 
 	print( "Final shuffled team list:" )
